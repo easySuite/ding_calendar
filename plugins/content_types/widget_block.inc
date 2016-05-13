@@ -12,3 +12,22 @@ $plugin = array(
   'render callback' => 'ding_calendar_widget_pane_custom_pane_render',
   'all contexts' => TRUE,
 );
+
+/**
+ * Run-time rendering of the body of the block with calendar/search field.
+ */
+function ding_calendar_widget_pane_custom_pane_render($subtype, $conf, $args, $contexts) {
+  $block = new stdClass();
+
+  $block->title = '';
+  $year = date('Y');
+  $month = date('m');
+  $block->content = array(
+    '#markup' => _ding_calendar_widget_content($year, $month),
+    '#attached' => array(
+      'css' => array(drupal_get_path('module', 'ding_calendar_widget') . '/css/ding_calendar_widget.css'),
+    ),
+  );
+
+  return $block;
+}
