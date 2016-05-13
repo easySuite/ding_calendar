@@ -9,6 +9,25 @@ $plugin = array(
   'title' => t('Full-page calendar block'),
   'description' => t('Full-page calendar block.'),
   'category' => t('Calendar widget'),
-  'render callback' => 'ding_calendar_widget_pane_custom_pane_render',
+  'render callback' => 'ding_calendar_pane_custom_pane_render',
   'all contexts' => TRUE,
 );
+
+/**
+ * Run-time rendering of the body of the block with calendar/search field.
+ */
+function ding_calendar_pane_custom_pane_render($subtype, $conf, $args, $contexts) {
+  $block = new stdClass();
+
+  $block->title = '';
+  $year = date('Y');
+  $month = date('m');
+  $block->content = array(
+    '#markup' => _ding_calendar_content($year, $month),
+    '#attached' => array(
+      'css' => array(drupal_get_path('module', 'ding_calendar') . '/css/ding_calendar.css'),
+    ),
+  );
+
+  return $block;
+}

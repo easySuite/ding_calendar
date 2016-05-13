@@ -1,4 +1,4 @@
-name = Ding calendar widget
+name = Ding calendar
 description = Adding new filtering mechanism on events page.
 core = 7.x
 package = Ding!
@@ -6,5 +6,5 @@ dependencies[] = views
 dependencies[] = views_content
 features[ctools][] = views:views_default:3.0
 features[features_api][] = api:2
-features[views_view][] = ding_calendar_widget
+features[views_view][] = ding_calendar
 features_exclude[dependencies][ctools] = ctools

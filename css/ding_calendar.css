@@ -1,36 +1,36 @@
-#eventsCalendar {
+#ding-calendar-container {
   width: 300px; }
-  #eventsCalendar .navi-heading {
+  #ding-calendar-container .navi-heading {
     text-align: center;
     vertical-align: middle; }
-    #eventsCalendar .navi-heading h2 {
+    #ding-calendar-container .navi-heading h2 {
       display: inline-block; }
-    #eventsCalendar .navi-heading .control {
+    #ding-calendar-container .navi-heading .control {
       margin-top: 7px; }
-    #eventsCalendar .navi-heading .next {
+    #ding-calendar-container .navi-heading .next {
       float: right; }
-    #eventsCalendar .navi-heading .prev {
+    #ding-calendar-container .navi-heading .prev {
       float: left; }
-  #eventsCalendar #calendar {
+  #ding-calendar-container #calendar {
     width: 100%; }
-    #eventsCalendar #calendar a {
+    #ding-calendar-container #calendar a {
       text-decoration: underline;
       width: 100%;
       height: 100%; }
-    #eventsCalendar #calendar tr:nth-child(odd) {
+    #ding-calendar-container #calendar tr:nth-child(odd) {
       background-color: #e8e8e8; }
-    #eventsCalendar #calendar tr:nth-child(even) {
+    #ding-calendar-container #calendar tr:nth-child(even) {
       background-color: #f2f2f2; }
-    #eventsCalendar #calendar tr .calendar-day-head {
+    #ding-calendar-container #calendar tr .calendar-day-head {
       background: #d5d5d5;
       font-weight: bold; }
-    #eventsCalendar #calendar tr td {
+    #ding-calendar-container #calendar tr td {
       text-align: center;
       width: 13.14%; }
-      #eventsCalendar #calendar tr td.calendar-day.current-day {
+      #ding-calendar-container #calendar tr td.calendar-day.current-day {
         background-color: #00caff;
         cursor: pointer; }
-        #eventsCalendar #calendar tr td.calendar-day.current-day a {
+        #ding-calendar-container #calendar tr td.calendar-day.current-day a {
           color: #fff;
           width: 100%;
           height: 100%; }

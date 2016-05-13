@@ -1,8 +1,8 @@
-# Ding calendar widget
+# Ding calendar
 
 ## Installation
-1.  Enable "Ding calendar widget" module.
-2.  Check feature "Ding calendar widget" to be enabled and in default state and now there should be created "Ding calendar widget" view with "Event list widget" display.
+1.  Enable "Ding calendar" module.
+2.  Check feature "Ding calendar" to be enabled and in default state and now there should be created "Ding calendar" view with "Event list" display.
 
 ## Usage
 1.  Go to desired panel.
