@@ -1,0 +1,101 @@
+/**
+ * Ding calendar styles.
+ * @author ac
+ */
+
+
+#ding-calendar-container {
+  background: #fff;
+
+  .navi-heading {
+    overflow: hidden;
+    padding-top: 10px;
+    text-align: center;
+
+    .prev {
+      @include zen-grid-item(2, 1);
+      margin-top: 5px;
+      
+      &:before {
+        content: "\f060";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: inherit;
+        -webkit-font-smoothing: antialiased;
+        display: inline;
+        width: auto;
+        height: auto;
+        line-height: normal;
+        vertical-align: baseline;
+        margin-top: 0;
+      }
+      
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    
+    h2 {
+      @include zen-grid-item(8, 3);
+    }
+    
+    .next {
+      @include zen-grid-item(2, 1, right);
+      margin-top: 5px;
+      
+      &:before {
+        content: "\f061";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: inherit;
+        -webkit-font-smoothing: antialiased;
+        display: inline;
+        width: auto;
+        height: auto;
+        line-height: normal;
+        vertical-align: baseline;
+        margin-top: 0;
+      }
+      
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  th {
+    background: none;
+    text-align: center;
+  }
+  
+  td {
+    text-align: center;
+  }
+}
+
+.ding-calendar-search-wrapper-outer {
+  margin: 20px 0 0 -10px;
+  overflow: hidden;
+  
+  .form-item-calendar-search {
+    @include zen-grid-item(9, 1);
+    
+    label {
+      display: none;
+    }
+
+    input[type="text"] {
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+
+    & + input[type="submit"] {
+      @include zen-grid-item(3, 1, right);
+      
+      @extend %button-default;
+    }
+  }
+}
+

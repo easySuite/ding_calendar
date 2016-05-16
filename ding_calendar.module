@@ -121,7 +121,7 @@ function _ding_calendar_content($year, $month) {
   );
 
   $output = '<div id="ding-calendar-container">' . $controls . $calendar . '</div>';
-  $output .= '<div id="ding-calendar-search-wrapper">';
+  $output .= '<div id="ding-calendar-search-wrapper" class="ding-calendar-search-wrapper">';
   $output .= drupal_render($search_form);
   $output .= '</div>';
   return $output;
@@ -152,7 +152,7 @@ function theme_ding_calendar_controls(&$variables) {
   // Generate 'Next' url.
   $next = $date->add(new DateInterval('P1M'));
   $next_month_link = l(
-    '>>>',
+    '',
     'calendar/' . $next->format('m') . '/' . $next->format('Y') . '/nojs',
     array('attributes' => array('class' => 'use-ajax control next'))
   );
@@ -163,7 +163,7 @@ function theme_ding_calendar_controls(&$variables) {
   $interval->invert = 1;
   $prev = $date->add($interval);
   $prev_month_link = l(
-    '<<<',
+    '',
     'calendar/' . $prev->format('m') . '/' . $prev->format('Y') . '/nojs',
     array('attributes' => array('class' => 'use-ajax control prev'))
   );
@@ -284,6 +284,7 @@ function ding_calendar_draw_input($form, &$form_state) {
   $form['calendar_search'] = array(
     '#type' => 'textfield',
     '#title' => t('Search event'),
+	'#attributes' => array('placeholder' => t('Search event')),
   );
 
   $form['calendar_search_submit'] = array(
@@ -378,4 +379,21 @@ function ding_calendar_get_events($date, $period = 'month') {
   $content = $view->render();
 
   return $content;
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function ding_calendar_theme_registry_alter(&$theme_registry) {
+
+  $module_path = drupal_get_path('module', 'ding_calendar');
+  $template_file_objects = drupal_find_theme_templates($theme_registry, '.tpl.php', $module_path);
+
+  foreach ($template_file_objects as $key => $template_file_object) {
+    if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
+      $theme_registry[$key]['theme path'] = $module_path;
+      $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
+      $theme_registry[$key]['type'] = 'module';
+    }
+  }
 }

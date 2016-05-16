@@ -1,0 +1,35 @@
+// =============================================================================
+//
+// DDBasic stylesheet combiner
+//
+// =============================================================================
+//
+
+
+/* Variables
+   ========================================================================== */
+$black:                           #000;
+
+/* Buttons */
+$button-default-background:       #444443 !default;
+$button-default-background-gradient: #1e1e1f !default;
+$button-default-color-hover:      #1e1e1e !default;
+$button-default-text-color:       #fffff8 !default;
+$zen-columns:                     12;
+$zen-gutters:                     20px;
+
+
+// Include compass
+@import "compass";
+
+
+// Grid - http://zengrids.com
+@import "zen-grids";
+
+
+// Include framework
+@import "_mixins";
+@import "_buttons";
+@import "_fontawesome";
+
+@import "_custom";
