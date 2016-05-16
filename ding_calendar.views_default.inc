@@ -1,21 +1,21 @@
 <?php
 /**
  * @file
- * ding_calendar_widget.views_default.inc
+ * ding_calendar.views_default.inc
  */
 
 /**
  * Implements hook_views_default_views().
  */
-function ding_calendar_widget_views_default_views() {
+function ding_calendar_views_default_views() {
   $export = array();
 
   $view = new view();
-  $view->name = 'ding_calendar_widget';
+  $view->name = 'ding_calendar';
   $view->description = '';
-  $view->tag = 'ding_calendar_widget';
+  $view->tag = 'ding_calendar';
   $view->base_table = 'node';
-  $view->human_name = 'Ding calendar widget';
+  $view->human_name = 'Ding calendar';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -239,8 +239,8 @@ function ding_calendar_widget_views_default_views() {
     'ding_library' => 'ding_library',
   );
 
-  /* Display: Event list widget */
-  $handler = $view->new_display('panel_pane', 'Event list widget', 'ding_widget_event_list');
+  /* Display: Event list */
+  $handler = $view->new_display('panel_pane', 'Event list', 'ding_event_list');
   $handler->display->display_options['defaults']['use_ajax'] = FALSE;
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['defaults']['use_more'] = FALSE;
@@ -479,7 +479,7 @@ function ding_calendar_widget_views_default_views() {
       'label' => 'Content: Has taxonomy term ID',
     ),
   );
-  $translatables['ding_calendar_widget'] = array(
+  $translatables['ding_calendar'] = array(
     t('Master'),
     t('See all events'),
     t('Indsend'),
@@ -503,7 +503,7 @@ function ding_calendar_widget_views_default_views() {
   <span class="event-list-price">[field_ding_event_price]</span>
 </div>'),
     t('Alle'),
-    t('Event list widget'),
+    t('Event list'),
     t('more'),
     t('Number of elements'),
     t('- Alle -'),
@@ -518,7 +518,7 @@ function ding_calendar_widget_views_default_views() {
     t('All'),
     t('Event panes'),
   );
-  $export['ding_calendar_widget'] = $view;
+  $export['ding_calendar'] = $view;
 
   return $export;
 }
