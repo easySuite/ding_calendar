@@ -216,7 +216,7 @@ function theme_ding_calendar(&$variables) {
   return theme('table', array(
     'rows' => $rows,
     'header' => $header,
-    'attributes' => array('id' => 'calendat'),
+    'attributes' => array('id' => 'calendar'),
   ));
 }
 
@@ -271,7 +271,8 @@ function _ding_calendar_generate_cell($timestamp, $day) {
 
   if ($events_count) {
     $cell = l($day, "calendar/events/{$date}", array(
-      'attributes' => array('class' => 'use-ajax'))
+        'attributes' => array('class' => 'use-ajax'),
+      )
     );
   }
 
@@ -356,7 +357,7 @@ function ding_calendar_get_events($date, $period = 'month') {
   $query = $result = db_select('field_data_field_ding_event_date', 'd')
     ->fields('d', array('entity_id'));
   if ($period == 'day') {
-    $query->where("date_format(field_ding_event_date_value, '%Y-%m-%d')=:date and date_format(field_ding_event_date_value, '%Y-%m-%d') >= CURRENT_DATE", array(':date' => $date));
+    $query->where("date_format(field_ding_event_date_value, '%Y-%m-%d')=:date", array(':date' => $date));
   }
   else {
     $query->where("date_format(field_ding_event_date_value, '%Y-%m')=:date", array(':date' => $date));

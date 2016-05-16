@@ -17,7 +17,7 @@ $plugin = array(
  * Calendar results custom pane renderer.
  */
 function ding_calendar_results_pane_custom_pane_render() {
-  $block = new stdClaqss();
+  $block = new stdClass();
   $block->title = '';
   $block->content = '<div id="ding-calendar-events">' . ding_calendar_get_events(date('Y-m')) . '</div>';
 
