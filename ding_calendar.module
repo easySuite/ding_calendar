@@ -72,9 +72,8 @@ function ding_calendar_callback($month, $year, $type = 'ajax') {
     $content = _ding_calendar_events($date);
 
     $commands = array();
-    $commands[] = ajax_command_replace('#ding-calendar-container', $output);
+    $commands[] = ajax_command_replace('#ding-calendar-wrapper', $output);
     $commands[] = ajax_command_replace('#ding-calendar-events', $content);
-    $commands[] = ajax_command_replace('#ding-calendar-search-wrapper', '');
 
     $page = array('#type' => 'ajax', '#commands' => $commands);
     ajax_deliver($page);
@@ -120,9 +119,11 @@ function _ding_calendar_content($year, $month) {
     )
   );
 
-  $output = '<div id="ding-calendar-container">' . $controls . $calendar . '</div>';
+  $output = '<div id="ding-calendar-wrapper">';
+  $output .= '<div id="ding-calendar-container">' . $controls . $calendar . '</div>';
   $output .= '<div id="ding-calendar-search-wrapper">';
   $output .= drupal_render($search_form);
+  $output .= '</div>';
   $output .= '</div>';
   return $output;
 }
@@ -304,13 +305,10 @@ function ding_calendar_draw_input($form, &$form_state) {
 function ding_calendar_search_ajax_callback($form, &$form_state) {
   $string = $form['calendar_search']['#value'];
 
-  $new_form_state = array();
-  $new_form_state['no_redirect'] = TRUE;
-  $new_form_state['input'] = array();
-  $new_form = drupal_build_form('ding_calendar_draw_input', $new_form_state);
+  $form_state['no_redirect'] = TRUE;
+  $new_form = drupal_build_form('ding_calendar_draw_input', $form_state);
 
   $commands = array();
-  $commands[] = ajax_command_remove($form['#id']);
   $commands[] = ajax_command_replace('#ding-calendar-search-wrapper', drupal_render($new_form));
   $commands[] = ajax_command_changed('#ding-calendar-events');
   $commands[] = ajax_command_replace('#ding-calendar-events', ding_calendar_search_display($string));
