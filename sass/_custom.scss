@@ -15,7 +15,7 @@
     .prev {
       @include zen-grid-item(2, 1);
       margin-top: 5px;
-      
+
       &:before {
         content: "\f060";
         font-family: FontAwesome;
@@ -30,20 +30,20 @@
         vertical-align: baseline;
         margin-top: 0;
       }
-      
+
       &:hover {
         text-decoration: none;
       }
     }
-    
+
     h2 {
       @include zen-grid-item(8, 3);
     }
-    
+
     .next {
       @include zen-grid-item(2, 1, right);
       margin-top: 5px;
-      
+
       &:before {
         content: "\f061";
         font-family: FontAwesome;
@@ -58,7 +58,7 @@
         vertical-align: baseline;
         margin-top: 0;
       }
-      
+
       &:hover {
         text-decoration: none;
       }
@@ -68,34 +68,58 @@
   th {
     background: none;
     text-align: center;
+
+    @include small-medium() {
+      padding: 5px;
+    }
   }
-  
+
   td {
     text-align: center;
+
+    @include small-medium() {
+      padding: 5px;
+    }
   }
 }
 
-.ding-calendar-search-wrapper-outer {
+#ding-calendar-wrapper > div + div,
+#ding-calendar-wrapper > div + form {
   margin: 20px 0 0 -10px;
   overflow: hidden;
-  
+
   .form-item-calendar-search {
-    @include zen-grid-item(9, 1);
-    
+    @include zen-grid-item(10, 1);
+
+    @include small-medium() {
+      @include zen-grid-item(12, 1);
+      clear: both;
+      padding-right: 0;
+    }
+
     label {
       display: none;
     }
 
     input[type="text"] {
-      padding-top: 6px;
-      padding-bottom: 6px;
+      height: 46px;
+      line-height: 46px;
+      max-width: 100%;
     }
 
     & + input[type="submit"] {
-      @include zen-grid-item(3, 1, right);
-      
+      @include zen-grid-item(2, 1, right);
+
+      @include small-medium() {
+        @include zen-grid-item(12, 1);
+        clear: both;
+        margin-left: 10px;
+        width: calc(100% - 10px);
+      }
+
       @extend %button-default;
+      heigh: 30px;
+      line-height: 30px;
     }
   }
 }
-
