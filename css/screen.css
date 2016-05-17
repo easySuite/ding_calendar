@@ -1612,7 +1612,7 @@ ul.icons li [class*=" icon-"] {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  heigh: 30px;
+  height: 46px;
   line-height: 30px;
 }
 @media only screen and (max-width: 768px) {
