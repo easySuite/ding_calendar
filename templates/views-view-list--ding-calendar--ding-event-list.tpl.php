@@ -18,4 +18,6 @@ print $wrapper_prefix;
     endforeach;
   print $list_type_suffix;
 print $wrapper_suffix;
-
+print '<div class="more-link">';
+print l(t('See all events'), 'arrangementer'); 
+print '</div>';
