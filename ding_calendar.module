@@ -107,13 +107,15 @@ function ding_calendar_events_callback($date, $type = 'ajax') {
 function _ding_calendar_content($year, $month) {
   $search_form = drupal_get_form('ding_calendar_draw_input');
 
-  $calendar = theme('ding_calendar', array(
+  $calendar = theme('ding_calendar',
+    array(
       'month' => $month,
       'year' => $year,
     )
   );
 
-  $controls = theme('ding_calendar_controls', array(
+  $controls = theme('ding_calendar_controls',
+    array(
       'month' => $month,
       'year' => $year,
     )
@@ -142,6 +144,7 @@ function _ding_calendar_events($date, $period = 'month') {
  * Rendering calendar navigation.
  */
 function theme_ding_calendar_controls(&$variables) {
+  global $language;
   $year = $variables['year'];
   $month = $variables['month'];
 
@@ -149,6 +152,7 @@ function theme_ding_calendar_controls(&$variables) {
 
   $date = DateTime::createFromFormat('Y-m', "{$year}-{$month}");
   $month_name = $date->format('F');
+  $month_name = format_date(strtotime($month_name), 'custom', 'F', NULL, $language->language);
 
   // Generate 'Next' url.
   $next = $date->add(new DateInterval('P1M'));
@@ -231,7 +235,7 @@ function theme_ding_calendar(&$variables) {
  */
 function _ding_calendar_generate_row($timestamp, $day, &$current) {
   $week_day = date('N', $timestamp);
-  $day_number = date('d', $timestamp);
+  $current_day = date('d-m', $timestamp);
 
   if (empty($current)) {
     $current = array(
@@ -244,8 +248,19 @@ function _ding_calendar_generate_row($timestamp, $day, &$current) {
     'data' => _ding_calendar_generate_cell($timestamp, $day),
     'class' => array('calendar-day'),
   );
-  if (date('d') == $day_number) {
+
+  if (date('d-m') == $current_day) {
     $current['data'][$week_day]['class'][] = 'current-day';
+  }
+
+  $events_count = db_query("select count(*) from {node} n inner join {field_data_field_ding_event_date} ed where n.nid=ed.entity_id and DATE_FORMAT(CONVERT_TZ(field_ding_event_date_value, '+00:00', :tz), '%Y-%m-%d') <= :form_date and DATE_FORMAT(CONVERT_TZ(field_ding_event_date_value2, '+00:00', :tz), '%Y-%m-%d') >= :form_date",
+    array(
+      ':form_date' => date('Y-m-d', $timestamp),
+      ':tz' => date('P'),
+    ))->fetchField();
+
+  if (!empty($events_count)) {
+    $current['data'][$week_day]['class'][] = 'has-events';
   }
 }
 
@@ -259,18 +274,16 @@ function _ding_calendar_generate_row($timestamp, $day, &$current) {
  */
 function _ding_calendar_generate_cell($timestamp, $day) {
   $cell = $day;
-
   $date = date('Y-m-d', $timestamp);
-  $events_count = db_select('field_data_field_ding_event_date', 'd')
-    ->fields('d', array('entity_id'))
-    ->where("date_format(field_ding_event_date_value, '%Y-%m-%d') = :event_date",
-      array(':event_date' => $date)
-    )
-    ->execute()
-    ->rowCount();
+  $events_count = db_query("select count(*) from {node} n inner join {field_data_field_ding_event_date} ed where n.nid=ed.entity_id and DATE_FORMAT(CONVERT_TZ(field_ding_event_date_value, '+00:00', :tz), '%Y-%m-%d') <= :form_date and DATE_FORMAT(CONVERT_TZ(field_ding_event_date_value2, '+00:00', :tz), '%Y-%m-%d') >= :form_date",
+    array(
+      ':form_date' => $date,
+      ':tz' => date('P'),
+    ))->fetchField();
 
   if ($events_count) {
-    $cell = l($day, "calendar/events/{$date}", array(
+    $cell = l($day, "calendar/events/{$date}",
+      array(
         'attributes' => array('class' => 'use-ajax'),
       )
     );
@@ -286,7 +299,7 @@ function ding_calendar_draw_input($form, &$form_state) {
   $form['calendar_search'] = array(
     '#type' => 'textfield',
     '#title' => t('Search event'),
-	'#attributes' => array('placeholder' => t('Search event')),
+    '#attributes' => array('placeholder' => t('Search event')),
   );
 
   $form['calendar_search_submit'] = array(
@@ -355,15 +368,20 @@ function ding_calendar_search_display($string = '') {
  * Fetching events nids filtered by date/month and passing them to view.
  */
 function ding_calendar_get_events($date, $period = 'month') {
-  $query = $result = db_select('field_data_field_ding_event_date', 'd')
-    ->fields('d', array('entity_id'));
   if ($period == 'day') {
-    $query->where("date_format(field_ding_event_date_value, '%Y-%m-%d')=:date", array(':date' => $date));
+    $result = db_query("select n.nid from {node} n inner join {field_data_field_ding_event_date} ed where n.nid=ed.entity_id and DATE_FORMAT(CONVERT_TZ(field_ding_event_date_value, '+00:00', :tz), '%Y-%m-%d') <= :date and DATE_FORMAT(CONVERT_TZ(field_ding_event_date_value2, '+00:00', :tz), '%Y-%m-%d') >= :date order by ed.field_ding_event_date_value asc",
+      array(
+        ':date' => $date,
+        ':tz' => date('P'),
+      ))->fetchCol();
   }
   else {
-    $query->where("date_format(field_ding_event_date_value, '%Y-%m')=:date", array(':date' => $date));
+    $result = db_query("select n.nid from {node} n inner join {field_data_field_ding_event_date} ed where n.nid=ed.entity_id and DATE_FORMAT(CONVERT_TZ(field_ding_event_date_value, '+00:00', :tz), '%Y-%m') <= :date and DATE_FORMAT(CONVERT_TZ(field_ding_event_date_value2, '+00:00', :tz), '%Y-%m') >= :date order by ed.field_ding_event_date_value asc",
+      array(
+        ':date' => $date,
+        ':tz' => date('P'),
+      ))->fetchCol();
   }
-  $result = $query->execute()->fetchCol();
 
   $view = views_get_view('ding_calendar');
   $view->set_display('ding_event_list');
@@ -384,7 +402,6 @@ function ding_calendar_get_events($date, $period = 'month') {
  * Implements hook_theme_registry_alter().
  */
 function ding_calendar_theme_registry_alter(&$theme_registry) {
-
   $module_path = drupal_get_path('module', 'ding_calendar');
   $template_file_objects = drupal_find_theme_templates($theme_registry, '.tpl.php', $module_path);
 

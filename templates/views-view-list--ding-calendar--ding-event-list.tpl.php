@@ -9,15 +9,15 @@
  */
 
 print $wrapper_prefix;
-  if (!empty($title)):
-    print '<div class="event-list-leaf">' . $title . '</div>';
-  endif;
-  print $list_type_prefix;
-    foreach ($rows as $id => $row):
-      print '<li class="event-list-item">' . $row . '</li>';
-    endforeach;
-  print $list_type_suffix;
+if (!empty($title)):
+  print '<div class="event-list-leaf">' . $title . '</div>';
+endif;
+print $list_type_prefix;
+foreach ($rows as $row):
+  print '<li class="event-list-item">' . $row . '</li>';
+endforeach;
+print $list_type_suffix;
 print $wrapper_suffix;
 print '<div class="more-link">';
-print l(t('See all events'), 'arrangementer'); 
+print l(t('See all events'), 'arrangementer');
 print '</div>';
