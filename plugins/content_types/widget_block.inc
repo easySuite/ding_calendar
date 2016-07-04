@@ -22,10 +22,12 @@ function ding_calendar_pane_custom_pane_render($subtype, $conf, $args, $contexts
   $block->title = '';
   $year = date('Y');
   $month = date('m');
+  $path = drupal_get_path('module', 'ding_calendar');
   $block->content = array(
     '#markup' => _ding_calendar_content($year, $month),
     '#attached' => array(
-      'css' => array(drupal_get_path('module', 'ding_calendar') . '/css/screen.css'),
+      'css' => array($path . '/css/screen.css'),
+      'js' => array($path . '/js/ding_calendar.js'),
     ),
   );
 

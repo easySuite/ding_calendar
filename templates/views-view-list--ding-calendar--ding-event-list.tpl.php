@@ -7,15 +7,18 @@
  * - $options['type'] will either be ul or ol.
  * @ingroup views_templates
  */
+?>
+<?php print $wrapper_prefix; ?>
+<?php if (!empty($title)): ?>
+  <div class="event-list-leaf"><?php print $title; ?></div>
+<?php endif; ?>
+<?php print $list_type_prefix; ?>
+<?php foreach ($rows as $row): ?>
+  <li class="event-list-item"><?php print $row; ?></li>
+<?php endforeach; ?>
+<?php print $list_type_suffix; ?>
+<?php print $wrapper_suffix; ?>
 
-print $wrapper_prefix;
-  if (!empty($title)):
-    print '<div class="event-list-leaf">' . $title . '</div>';
-  endif;
-  print $list_type_prefix;
-    foreach ($rows as $id => $row):
-      print '<li class="event-list-item">' . $row . '</li>';
-    endforeach;
-  print $list_type_suffix;
-print $wrapper_suffix;
-
+<div class="more-link">
+  <?php print l(t('See all events'), 'arrangementer'); ?>
+</div>

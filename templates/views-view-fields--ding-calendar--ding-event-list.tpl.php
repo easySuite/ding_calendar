@@ -26,7 +26,7 @@
  * @ingroup views_templates
  */
 
-foreach ($fields as $id => $field) { 
+foreach ($fields as $id => $field) {
   if ($id == 'field_ding_event_library') {
     print '<div class="event-list-info">';
   }
@@ -35,7 +35,7 @@ foreach ($fields as $id => $field) {
     print $field->separator;
   }
 
-  if($id != 'field_ding_event_library' || ($id == 'field_ding_event_library' && empty($fields['field_ding_event_location']->content)) ) {
+  if ($id != 'field_ding_event_library' || ($id == 'field_ding_event_library' && empty($fields['field_ding_event_location']->content))) {
     print $field->wrapper_prefix;
     print $field->label_html;
     print $field->content;
