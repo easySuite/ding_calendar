@@ -20,5 +20,5 @@
 <?php print $wrapper_suffix; ?>
 
 <div class="more-link">
-  <?php print l(t('See all events'), 'arrangementer'); ?>
+  <?php print l(t('See more'), 'arrangementer'); ?>
 </div>
