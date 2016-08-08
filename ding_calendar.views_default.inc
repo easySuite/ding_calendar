@@ -224,6 +224,7 @@ function ding_calendar_views_default_views() {
   /* Display: Event list */
   $handler = $view->new_display('panel_pane', 'Event list', 'ding_event_list');
   $handler->display->display_options['defaults']['use_ajax'] = FALSE;
+  $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['defaults']['use_more'] = FALSE;
   $handler->display->display_options['defaults']['link_display'] = FALSE;
   $handler->display->display_options['link_display'] = 'custom_url';
