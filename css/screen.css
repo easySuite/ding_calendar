@@ -1675,3 +1675,7 @@ ul.icons li [class*=" icon-"] {
   height: 100%;
   font-weight: bold;
 }
+
+.view-display-id-ding_event_list .view-content {
+  background-color: white;
+}
