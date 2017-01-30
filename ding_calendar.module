@@ -296,10 +296,15 @@ function _ding_calendar_generate_cell($timestamp, $day) {
  * Events search form.
  */
 function ding_calendar_draw_input($form, &$form_state) {
+  $form['#id'] = array('ding-calendar-draw-input');
+
   $form['calendar_search'] = array(
     '#type' => 'textfield',
     '#title' => t('Search event'),
-    '#attributes' => array('placeholder' => t('Search event')),
+    '#attributes' => array(
+      'placeholder' => t('Search event'),
+      'autocomplete' => 'off',
+    ),
   );
 
   $form['calendar_search_submit'] = array(
@@ -401,6 +406,21 @@ function ding_calendar_theme_registry_alter(&$theme_registry) {
       $theme_registry[$key]['theme path'] = $module_path;
       $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
       $theme_registry[$key]['type'] = 'module';
+    }
+  }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function ding_calendar_views_pre_render(&$view) {
+  if ($view->name == 'ding_calendar' || $view->name == 'ding_event') {
+    foreach ($view->result as $item) {
+      $price_field = $item->field_field_ding_event_price[0]['raw']['value'];
+
+      if (empty($price_field)) {
+        $item->field_field_ding_event_price[0]['rendered']['#markup'] = t('Free');
+      }
     }
   }
 }

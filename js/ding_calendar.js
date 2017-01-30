@@ -12,6 +12,22 @@
 
         $(this).parent().parent().addClass('selected');
       });
+
+      $.fn.onEnter = function(func) {
+        this.bind('keypress', function(e) {
+          if (e.keyCode === 13) {
+            func.apply(this, [e]);
+          }
+        });
+
+        return this;
+      };
+
+      $('input[name=calendar_search]').onEnter(function() {
+        var form = $('#ding-calendar-draw-input');
+        var form_submit = form.find('input[type=submit]');
+        form_submit.mousedown();
+      });
     }
   };
 })(jQuery);
