@@ -65,7 +65,7 @@ function ding_calendar_theme($existing, $type, $theme, $path) {
 /**
  * AJAX callback for rendering events calendar.
  */
-function ding_calendar_callback($month, $year, $type = 'ajax') {
+function ding_calendar_callback($year, $month, $type = 'ajax') {
   if ($type == 'ajax') {
     $date = $year . '-' . str_pad($month, 2, '0', STR_PAD_LEFT);
     $output = _ding_calendar_content($year, $month);
@@ -106,7 +106,6 @@ function ding_calendar_events_callback($date, $type = 'ajax') {
  */
 function _ding_calendar_content($year, $month) {
   $search_form = drupal_get_form('ding_calendar_draw_input');
-
   $calendar = theme('ding_calendar',
     array(
       'month' => $month,
@@ -144,42 +143,87 @@ function _ding_calendar_events($date) {
  * Rendering calendar navigation.
  */
 function theme_ding_calendar_controls(&$variables) {
-  global $language;
   $year = $variables['year'];
   $month = $variables['month'];
 
   drupal_add_library('system', 'drupal.ajax');
 
-  $date = DateTime::createFromFormat('Y-m', "{$year}-{$month}");
-  $month_name = $date->format('F');
-  $month_name = format_date(strtotime($month_name), 'custom', 'F', NULL, $language->language);
+  $date = DateTime::createFromFormat('Y-m-d', "{$year}-{$month}-01");
+  $month_name = t(date_format($date, 'F'));
 
-  // Generate 'Next' url.
-  $next = $date->add(new DateInterval('P1M'));
-  $next_month_link = l(
-    '',
-    'calendar/' . $next->format('m') . '/' . $next->format('Y') . '/nojs',
-    array('attributes' => array('class' => 'use-ajax control next'))
+  $next_month_link = _get_next_month_link($date);
+  $prev_month_link = _get_prev_month_link($year, $month);
+
+  $output = '<div class="navi-heading">';
+  $output .= $prev_month_link;
+  $output .= '<h2>' . $month_name . '</h2>';
+  $output .= $next_month_link;
+  $output .= '</div>';
+
+  return $output;
+}
+
+/**
+ * Generating next month link.
+ *
+ * @param object $date
+ *   Current calendar DateTime object.
+ *
+ * @return string
+ *   Link markup.
+ */
+function _get_next_month_link($date) {
+  // Problem mentioned in http://php.net/manual/en/datetime.add.php:Example #3.
+  if ($date->format('d-m') == '31-01') {
+    $next = $date->modify('last day of next month');
+  }
+  else {
+    $next = $date->add(new DateInterval('P1M'));
+  }
+
+  $next_month_link = array(
+    '#theme' => 'link',
+    '#title' => '',
+    '#path' => 'calendar/' . $next->format('Y') . '/' . $next->format('m') . '/nojs',
+    '#options' => array(
+      'attributes' => array(
+        'class' => 'use-ajax control next',
+      ),
+    ),
   );
 
-  // Generate 'Prev' url.
-  $date = DateTime::createFromFormat('Y-m', "{$year}-{$month}");
+  return drupal_render($next_month_link);
+}
+
+/**
+ * Generate previous month link.
+ *
+ * @param int $year
+ *   Passed in year.
+ * @param int $month
+ *   Passed in month.
+ *
+ * @return string
+ *   Link markup.
+ */
+function _get_prev_month_link($year, $month) {
+  $date = DateTime::createFromFormat('Y-m-d', "{$year}-{$month}-01");
   $interval = new DateInterval('P1M');
   $interval->invert = 1;
   $prev = $date->add($interval);
-  $prev_month_link = l(
-    '',
-    'calendar/' . $prev->format('m') . '/' . $prev->format('Y') . '/nojs',
-    array('attributes' => array('class' => 'use-ajax control prev'))
+
+  $prev_month_link = array(
+    '#theme' => 'link',
+    '#title' => '',
+    '#path' => 'calendar/' . $prev->format('Y') . '/' . $prev->format('m') . '/nojs',
+    '#options' => array(
+      'attributes' => array(
+        'class' => 'use-ajax control prev',
+      ),
+    ),
   );
 
-  $output = '<div class="navi-heading">' .
-    $prev_month_link .
-    '<h2>' . $month_name . '</h2>' .
-    $next_month_link .
-    '</div>';
-
-  return $output;
+  return drupal_render($prev_month_link);
 }
 
 /**
