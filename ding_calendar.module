@@ -189,6 +189,7 @@ function _get_next_month_link($date) {
       'attributes' => array(
         'class' => 'use-ajax control next',
       ),
+      'html' => FALSE,
     ),
   );
 
@@ -220,6 +221,7 @@ function _get_prev_month_link($year, $month) {
       'attributes' => array(
         'class' => 'use-ajax control prev',
       ),
+      'html' => FALSE,
     ),
   );
 
@@ -429,6 +431,10 @@ function ding_calendar_get_events($date) {
   if (count($result) > 0) {
     $result = implode('+', $result);
   }
+  else {
+    $result = '';
+  }
+
   $view->set_arguments(array($result));
 
   $view->pre_execute();
