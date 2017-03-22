@@ -1,5 +1,9 @@
 # Ding calendar
 
+This module gives possibility to show a calendar of events with highlighted dates that have events,
+click on date will open short description of all events available for that date under calendar.
+Using calendar search field you can find current and upcoming events using drupal search functionality.
+
 ## Installation
 1.  Enable "Ding calendar" module.
 2.  Check feature "Ding calendar" to be enabled and in default state and now there should be created "Ding calendar" view with "Event list" display.
