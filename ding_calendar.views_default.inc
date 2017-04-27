@@ -23,7 +23,7 @@ function ding_calendar_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['use_more'] = TRUE;
-  $handler->display->display_options['use_more_always'] = TRUE;
+  $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'See all events';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -40,14 +40,6 @@ function ding_calendar_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'list';
   $handler->display->display_options['style_options']['wrapper_class'] = 'event-list';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* No results behavior: Global: Text area */
-  $handler->display->display_options['empty']['area']['id'] = 'area';
-  $handler->display->display_options['empty']['area']['table'] = 'views';
-  $handler->display->display_options['empty']['area']['field'] = 'area';
-  $handler->display->display_options['empty']['area']['label'] = 'Empty text';
-  $handler->display->display_options['empty']['area']['empty'] = TRUE;
-  $handler->display->display_options['empty']['area']['content'] = 'No events where found.';
-  $handler->display->display_options['empty']['area']['format'] = 'ding_wysiwyg';
   /* Relationship: OG membership: OG membership from Node */
   $handler->display->display_options['relationships']['og_membership_rel']['id'] = 'og_membership_rel';
   $handler->display->display_options['relationships']['og_membership_rel']['table'] = 'node';
@@ -220,16 +212,6 @@ function ding_calendar_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'ding_event' => 'ding_event',
   );
-  /* Filter criterion: Date: Date (node) */
-  $handler->display->display_options['filters']['date_filter']['id'] = 'date_filter';
-  $handler->display->display_options['filters']['date_filter']['table'] = 'node';
-  $handler->display->display_options['filters']['date_filter']['field'] = 'date_filter';
-  $handler->display->display_options['filters']['date_filter']['operator'] = '>=';
-  $handler->display->display_options['filters']['date_filter']['default_date'] = 'now';
-  $handler->display->display_options['filters']['date_filter']['date_fields'] = array(
-    'field_data_field_ding_event_date.field_ding_event_date_value' => 'field_data_field_ding_event_date.field_ding_event_date_value',
-    'field_data_field_ding_event_date.field_ding_event_date_value2' => 'field_data_field_ding_event_date.field_ding_event_date_value2',
-  );
   /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type_1']['id'] = 'type_1';
   $handler->display->display_options['filters']['type_1']['table'] = 'node';
@@ -244,21 +226,14 @@ function ding_calendar_views_default_views() {
   $handler->display->display_options['defaults']['use_ajax'] = FALSE;
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['defaults']['use_more'] = FALSE;
+  $handler->display->display_options['use_more'] = TRUE;
   $handler->display->display_options['defaults']['link_display'] = FALSE;
   $handler->display->display_options['link_display'] = 'custom_url';
   $handler->display->display_options['link_url'] = 'arrangementer';
   $handler->display->display_options['defaults']['pager'] = FALSE;
-  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['pager']['options']['id'] = '0';
-  $handler->display->display_options['pager']['options']['quantity'] = '9';
-  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Number of elements';
-  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
-  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Forskydning';
-  $handler->display->display_options['pager']['options']['tags']['first'] = '« First';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'Next ›';
-  $handler->display->display_options['pager']['options']['tags']['last'] = 'Last »';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'list';
   $handler->display->display_options['style_options']['grouping'] = array(
@@ -458,6 +433,22 @@ function ding_calendar_views_default_views() {
   $handler->display->display_options['arguments']['tid']['validate_options']['vocabularies'] = array(
     'event_category' => 'event_category',
   );
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 0;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'ding_event' => 'ding_event',
+  );
   $handler->display->display_options['pane_category']['name'] = 'Event panes';
   $handler->display->display_options['pane_category']['weight'] = '0';
   $handler->display->display_options['allow']['use_pager'] = 0;
@@ -487,8 +478,6 @@ function ding_calendar_views_default_views() {
     t('Sortér efter'),
     t('Stigende'),
     t('Faldende'),
-    t('Empty text'),
-    t('No events where found.'),
     t('OG membership from node'),
     t('<div class="event-list-date-wrapper">
   <span class="event-list-day">[field_ding_event_date]</span>
@@ -505,13 +494,6 @@ function ding_calendar_views_default_views() {
     t('Alle'),
     t('Event list'),
     t('more'),
-    t('Number of elements'),
-    t('- Alle -'),
-    t('Forskydning'),
-    t('« First'),
-    t('‹ previous'),
-    t('Next ›'),
-    t('Last »'),
     t('OG node group'),
     t('<i class="icon-chevron-right"></i>'),
     t('Læs mere'),
