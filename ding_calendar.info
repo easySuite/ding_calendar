@@ -1,7 +1,8 @@
 name = Ding calendar
 description = Adding new filtering mechanism on events page.
 core = 7.x
-package = Ding!
+package = easyOPAC
+version = 7.x-3.0.2
 dependencies[] = views
 dependencies[] = views_content
 features[ctools][] = views:views_default:3.0
