@@ -464,7 +464,7 @@ function ding_calendar_theme_registry_alter(&$theme_registry) {
  * Implements hook_views_pre_render().
  */
 function ding_calendar_views_pre_render(&$view) {
-  if ($view->name == 'ding_calendar' || $view->name == 'ding_event') {
+  if ($view->name == 'ding_calendar') {
     foreach ($view->result as $item) {
       $price_field = $item->field_field_ding_event_price[0]['raw']['value'];
 
