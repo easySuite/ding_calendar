@@ -1,0 +1,264 @@
+/**
+ * Ding calendar styles.
+ *
+ */
+ @import "../../../themes/ddbasic/sass/_base.scss";
+ 
+ $list-item-background-color-odd: #e8e8e8 !default;
+ $list-item-background-color-even: #f2f2f2 !default;
+
+#ding-calendar-container {
+
+  .table-bordered th,
+  .table-bordered td,
+  table tr,
+  table td {
+    border-left: 1px solid $grey-light;
+    border-top: 1px solid $grey-light;
+  }
+
+  .navi-heading {
+    text-align: center;
+    vertical-align: middle;
+
+    h2 {
+      display: inline-block;
+      text-transform: lowercase;
+    }
+    .control {
+      margin-top: 7px;
+    }
+    .next {
+      float: right;
+    }
+    .prev {
+      float: left;
+    }
+  }
+
+  .slick-slider {
+    margin-bottom: 16px;
+    position: relative;
+
+    .slick-arrow.slick-prev {
+      left: 0;
+    }
+  }
+
+  #calendar {
+    width: 100%;
+    a {
+      text-decoration: underline;
+      width: 100%;
+      height: 100%;
+    }
+
+    thead th {
+      background: #d5d5d5;
+      font-weight: bold;
+      text-transform: lowercase;
+      font-size: 16px;
+      text-align: center;
+      padding: 25px;
+
+      @include media($mobile) {
+        padding: 5px 0;
+      }
+    }
+
+    tr {
+      &:nth-child(odd) {
+        background-color: $list-item-background-color-odd;
+      }
+
+      &:nth-child(even) {
+        background-color: $list-item-background-color-even;
+      }
+
+      td {
+        text-align: center;
+        width: 13.14%;
+
+        &.calendar-day.has-events {
+          background-color: #999;
+         
+          a {
+            color: $white;
+          }
+        }
+
+        &.calendar-day.has-events.selected {
+          background-color: $color-text-link;
+
+          a {
+            color: $white;
+          }
+        }
+
+        &.calendar-day.current-day {
+          .day-number {
+            font-weight: bold;
+          }
+
+          a {
+            width: 100%;
+            height: 100%;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+     // Media small
+     @include media($mobile) {
+      table-layout: fixed;
+      margin: 0 auto;
+      min-width: 280px;
+    }
+  }
+}
+
+
+.not-logged-in .form-item-calendar-search {
+  width: 86%;
+}
+
+.logged-in .form-item-calendar-search {
+  width: 84%;
+}
+
+#ding-calendar-wrapper > div + div,
+#ding-calendar-wrapper > div + form {
+  margin: 20px 0 0 0px;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  position: relative;
+
+  .form-item-calendar-search {
+    display: inline-block;
+    max-width: 100%;
+
+    @include media($notebook) {
+      width: 83%;
+      max-width: 100%;
+    }
+
+    @include media($tablet) {
+      width: 77%;
+      max-width: 100%;
+    }
+
+    @include media($mobile) {
+      clear: both;
+      padding-right: 0;
+      width: 100%;
+    }
+
+    label {
+      display: none;
+    }
+
+    input[type="text"] {
+      width: 100%;
+    }
+
+    & + input[type="submit"] {
+      display: inline-block;
+      padding: 20px 100px 14px 15px;
+      margin-left: 10px;
+
+      @include media($mobile) {
+        clear: both;
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.view-display-id-ding_event_list .view-content {
+  background-color: white;
+}
+
+#ding-calendar-events {
+  .event-list-leaf {
+    background: $grey;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+
+    .event-list-day {
+      background-color: $color-primary;
+      color: $white;
+      display: block;
+      text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+    }
+
+    .event-list-month {
+      text-transform: lowercase;
+    }
+
+    .event-list-fulldate {
+      color: rgba(0,0,0,0.7);
+      display: inline-block;
+      font-weight: bold;
+      font-size: 130%;
+      margin-top: 17px;
+    }
+
+    .event-list-inner-wrapper {
+      background: $white;
+    }
+
+    .event-list-date {
+      display: block;
+      font-size: 130%;
+      padding-top: 5px;
+      margin-bottom: -10px;
+    }
+
+    .event-list-date-wrapper {
+      display: inline-block;
+      font-size: 75%;
+      margin-right: 10px;
+      min-width: 65px;
+      text-align: center;
+      vertical-align: top;
+    }
+  }
+
+  ul.list.event-list {
+    margin: 10px;
+
+    .event-list-item {
+      display: inline-block;
+      width: 100%;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    .event-list-description {
+      width: 95%;
+      margin-bottom: 0;
+    }
+
+    span {
+      padding-right: 10px;
+    }
+  }
+
+  .event-image-wrapper a {
+    float: left;
+    margin-right: 10px;
+    max-width: 200px;
+
+    @include media($mobile) {
+      max-width: 15%;
+    }
+  }
+}

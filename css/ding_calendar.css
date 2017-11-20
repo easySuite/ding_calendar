@@ -1,6 +1,7 @@
-/* Variables
-   ========================================================================== */
-/* Buttons */
+/**
+ * Ding calendar styles.
+ *
+ */
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -76,10 +77,6 @@
     opacity: 1;
   }
 }
-/**
- * Ding calendar styles.
- *
- */
 #ding-calendar-container .table-bordered th,
 #ding-calendar-container .table-bordered td,
 #ding-calendar-container table tr,
@@ -170,6 +167,14 @@
   }
 }
 
+.not-logged-in .form-item-calendar-search {
+  width: 86%;
+}
+
+.logged-in .form-item-calendar-search {
+  width: 84%;
+}
+
 #ding-calendar-wrapper > div + div,
 #ding-calendar-wrapper > div + form {
   margin: 20px 0 0 0px;
@@ -181,7 +186,6 @@
 #ding-calendar-wrapper > div + div .form-item-calendar-search,
 #ding-calendar-wrapper > div + form .form-item-calendar-search {
   display: inline-block;
-  width: 86%;
   max-width: 100%;
 }
 @media screen and (max-width: 1100px) {
