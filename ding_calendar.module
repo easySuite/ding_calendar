@@ -154,7 +154,7 @@ function theme_ding_calendar_controls(&$variables) {
   $next_month_link = _get_next_month_link($date);
   $prev_month_link = _get_prev_month_link($year, $month);
 
-  $output = '<div class="navi-heading">';
+  $output = '<div class="navi-heading slick-slider">';
   $output .= $prev_month_link;
   $output .= '<h2>' . $month_name . '</h2>';
   $output .= $next_month_link;
@@ -187,7 +187,7 @@ function _get_next_month_link($date) {
     '#path' => 'calendar/' . $next->format('Y') . '/' . $next->format('m') . '/nojs',
     '#options' => array(
       'attributes' => array(
-        'class' => 'use-ajax control next',
+        'class' => 'use-ajax control next slick-arrow slick-next',
       ),
       'html' => FALSE,
     ),
@@ -219,7 +219,7 @@ function _get_prev_month_link($year, $month) {
     '#path' => 'calendar/' . $prev->format('Y') . '/' . $prev->format('m') . '/nojs',
     '#options' => array(
       'attributes' => array(
-        'class' => 'use-ajax control prev',
+        'class' => 'use-ajax control prev slick-arrow slick-prev',
       ),
       'html' => FALSE,
     ),
@@ -464,7 +464,7 @@ function ding_calendar_theme_registry_alter(&$theme_registry) {
  * Implements hook_views_pre_render().
  */
 function ding_calendar_views_pre_render(&$view) {
-  if ($view->name == 'ding_calendar' || $view->name == 'ding_event') {
+  if ($view->name == 'ding_calendar') {
     foreach ($view->result as $item) {
       $price_field = $item->field_field_ding_event_price[0]['raw']['value'];
 

@@ -26,7 +26,7 @@ function ding_calendar_pane_custom_pane_render($subtype, $conf, $args, $contexts
   $block->content = array(
     '#markup' => _ding_calendar_content($year, $month),
     '#attached' => array(
-      'css' => array($path . '/css/screen.css'),
+      'css' => array($path . '/css/ding_calendar.css'),
       'js' => array($path . '/js/ding_calendar.js'),
     ),
   );

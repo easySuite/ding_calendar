@@ -13,20 +13,13 @@
         $(this).parent().parent().addClass('selected');
       });
 
-      $.fn.onEnter = function(func) {
-        this.bind('keypress', function(e) {
-          if (e.keyCode === 13) {
-            func.apply(this, [e]);
-          }
-        });
-
-        return this;
-      };
-
-      $('input[name=calendar_search]').onEnter(function() {
+      $('input[name=calendar_search]', context).keypress(function(e) {
         var form = $('#ding-calendar-draw-input');
         var form_submit = form.find('input[type=submit]');
-        form_submit.mousedown();
+        if (e.which == 13) {
+          form_submit.mousedown();
+          return false;
+        }
       });
     }
   };
